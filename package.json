@@ -6,13 +6,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:format": "yarn prettier --list-different",
+    "test:format": "prettier --check .",
     "test:code": "eslint .",
     "test": "yarn test:format && yarn test:code",
-    "fix:format": "yarn prettier --write",
+    "fix:format": "prettier --write .",
     "fix:code": "yarn test:code --fix",
-    "fix": "yarn fix:code && yarn fix:format",
-    "prettier": "prettier \"**/*.{json,md,scss,yaml,yml}\""
+    "fix": "yarn fix:code && yarn fix:format"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^1.8.2",
