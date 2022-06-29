@@ -1,0 +1,48 @@
+// $themes: ("light", "dark");
+$colors: (
+  #{null}: (
+      white: (
+        #ffffff,
+      ),
+      primary: (
+        #407bff,
+      ),
+      bg: (
+        #fcfcfc,
+      ),
+      bg-alt: (
+        #ececec,
+      ),
+    ),
+  f: (
+    1: #4d4d4d,
+    2: var(--clr--white),
+  ),
+  btn: (
+    grey: #b8b8b8,
+    blue: #4668c0,
+  )
+);
+//creating css variables
+:root {
+  @each $group, $content in $colors {
+    @each $color, $hex in $content {
+      @if (length($hex) == 1) {
+        --clr-#{$group}-#{"" + $color}: #{$hex};
+      }
+      @if (length($hex) == 2) {
+        --clr-#{$group}-#{"" + $color}: #{nth($hex, 1)};
+      }
+    }
+  }
+}
+
+// body.#{nth($themes,2)} {
+//   @each $group, $content in $colors {
+//     @each $color, $hex in $content {
+//       @if (length($hex) == 2) {
+//         --clr-#{$group}-#{"" + $color}: #{nth($hex, 2)};
+//       }
+//     }
+//   }
+// }
