@@ -2,3 +2,68 @@
 @use './config/colors' as *;
 @use './helpers/mixins' as *;
 @use './helpers/placeholders' as *;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--clr--primary); /* fallback for old browsers */
+  background: linear-gradient(
+    to right,
+    var(--clr--primary),
+    var(--clr--secondary)
+  );
+  @include flex(center);
+  width: 100%;
+  min-height: 100vh;
+}
+
+.board {
+  width: 500px;
+  min-height: 500px;
+  @include flex(space-around, center) {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  background-color: var(--clr--bg);
+  border-radius: $RADIUS;
+  box-shadow: $SHADOW_ONE;
+  padding: 15px;
+
+  .card {
+    @include size($CARD_SIZE);
+    cursor: pointer;
+    position: relative;
+    .card-front,
+    .card-back {
+      position: absolute !important;
+      border-radius: $RADIUS;
+      transition: transform $DELAY cubic-bezier(0.4, 0, 0.2, 1);
+      backface-visibility: hidden;
+      @include flex(center);
+      @include size(100%);
+      user-select: none;
+      box-shadow: $SHADOW_ONE;
+    }
+    .card-front {
+      background: var(--clr--black);
+      @include before('?') {
+        font-size: 2.5em;
+        color: var(--clr--white);
+      }
+    }
+    .card-back {
+      font-size: 2.2em;
+      background-color: var(--clr--white);
+      transform: rotateY(180deg) rotateZ(50deg);
+    }
+    &.flipped,
+    &.matched {
+      pointer-events: none;
+      .card-front {
+        transform: rotateY(180deg) rotateZ(50deg);
+      }
+      .card-back {
+        transform: rotateY(0) rotateZ(0);
+      }
+    }
+  }
+}
