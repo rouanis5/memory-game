@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "yarn clean && vite",
     "build": "vite build",
     "preview": "vite preview",
     "test:format": "prettier --check .",
@@ -11,7 +11,8 @@
     "test": "yarn test:format && yarn test:code",
     "fix:format": "prettier --write .",
     "fix:code": "yarn test:code --fix",
-    "fix": "yarn fix:code && yarn fix:format"
+    "fix": "yarn fix:code && yarn fix:format",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^1.8.2",
