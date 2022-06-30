@@ -7,7 +7,19 @@
     <title>memory game</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="game">
+      <div class="controls">
+        <button>Start</button>
+        <div class="stats">
+          <div class="moves">0 moves</div>
+          <div class="timer">time: 0 sec</div>
+        </div>
+      </div>
+      <div class="board-container">
+        <div class="board" id="board" data-dimension="4"></div>
+        <div class="win">You won!</div>
+      </div>
+    </div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
