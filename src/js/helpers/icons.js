@@ -1,4 +1,4 @@
-import shuffle from './functions'
+import { shuffle } from './functions'
 /**
  * convert icons into array that has objects with (id and icon) repeated 2 times
  */

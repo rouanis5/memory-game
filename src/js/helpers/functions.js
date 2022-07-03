@@ -9,4 +9,11 @@ function shuffle(array) {
   return tmp
 }
 
-export default shuffle
+// return the realpath (full url)
+function realpath(stingURL) {
+  const url = stingURL
+  // the current folder is gonna be the js folder
+  return new URL(`../${url}`, import.meta.url).href
+}
+
+export { shuffle, realpath }
