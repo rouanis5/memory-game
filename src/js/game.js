@@ -1,5 +1,14 @@
 import getIcons from './helpers/icons'
 import boardView from './views/board'
+import { setAudios, play } from './helpers/audio'
+import { realpath } from './helpers/functions'
+
+const audio = setAudios({
+  reward: realpath('../audio/game_reward.mp3'),
+  sanction: realpath('../audio/game_sanction.mp3'),
+  over: realpath('../audio/game_over.mp3'),
+  running: realpath('../audio/game_running.wav'),
+})
 
 // set default delay (the same with sass transition delay)
 const delay = 600
@@ -25,6 +34,13 @@ btns.forEach((btn) => {
         flipped[1].getAttribute('data-card-id')
       ) {
         flipped.map((el) => el.classList.add('matched'))
+        play(audio.reward, {
+          delay: delay / 2,
+        })
+      } else {
+        play(audio.sanction, {
+          delay: delay / 2,
+        })
       }
       setTimeout(() => {
         flipped.map((el) => el.classList.remove('flipped'))
