@@ -24,7 +24,7 @@ function isGameOver() {
     params.timer.stop() // stop the timer
     clearInterval(interval) // stop updating time on the screen
     audio.running.pause() // stop running audio
-    selectors.board.classList.add('freeze') // stop all events on the game board
+    selectors.game.classList.add('freeze') // stop all events on the game board
 
     state.time = params.timer.getMilliseconds() // save the game time in state.time
   }
