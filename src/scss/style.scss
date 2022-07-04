@@ -28,6 +28,10 @@ body {
   box-shadow: $SHADOW_ONE;
   padding: 15px;
 
+  &.freeze {
+    pointer-events: none;
+  }
+
   .card {
     @include size($CARD_SIZE);
     cursor: pointer;
