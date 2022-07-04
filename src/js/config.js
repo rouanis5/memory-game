@@ -1,18 +1,23 @@
 import { setAudios } from './helpers/audio'
 import { realpath } from './helpers/functions'
 import Timer from './helpers/timer'
+import getIcons from './helpers/icons'
 
 const state = {
   moves: 0,
   matched: 0,
   wrong: 0,
   time: undefined,
+  win: false,
 }
 
 const params = {
-  icons: ['🤑', '🔥', '🤖', '🐸', '🦜', '🦋', '⚽', '💎'],
+  // dublicate icons and shuffle them
+  icons: getIcons(['🤑', '🔥', '🤖', '🐸', '🦜', '🦋', '⚽', '💎']),
   delay: 600, // set default delay (= sass delay)
+  maxTries: 8, // max tries
   timer: new Timer(),
+  cardIdAttr: 'data-card-id',
 }
 
 const audio = setAudios({

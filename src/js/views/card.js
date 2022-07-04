@@ -1,4 +1,5 @@
 import ViewBuilder from '../helpers/viewBuilder'
+import { params as p } from '../config'
 
 export default function card(id, icon) {
   const CurrIcon = icon
@@ -6,7 +7,7 @@ export default function card(id, icon) {
   const view = new ViewBuilder()
   view.setTitle('card')
   view.setHtml(`
-  <div class="card" data-card-id="${CurrId}">
+  <div class="card" ${p.cardIdAttr}="${CurrId}">
       <div class="card-front"></div>
       <div class="card-back">${CurrIcon}</div>
   </div>
