@@ -10,6 +10,7 @@ const { cardIdAttr: idAttr } = params // id attaribute
 const selectors = {
   moves: document.getElementById('moves'),
   board: document.getElementById('board'),
+  game: document.getElementById('game'),
   time: document.getElementById('time'),
   start: document.getElementById('start'),
   matched: document.getElementById('matched'),
@@ -81,7 +82,9 @@ function analyse(cards) {
 function run() {
   // import the icons and create the board html
   const icons = getIcons(params.icons) // dublicate icons and shuffle them
-  selectors.board.innerHTML = boardView(icons).html // fill board with cards
+  Array.from(selectors.board.children).map((el) => el.classList.add('d-none'))
+  selectors.game.classList.remove('d-none')
+  selectors.game.innerHTML = boardView(icons).html // fill board with cards
 
   selectors.remained.textContent = params.maxTries - state.wrong // display remaind tries
 
@@ -89,7 +92,7 @@ function run() {
   params.timer.start() // start the timer
 
   // document.querySelectorAll('.card') is not working here !
-  const cards = Array.from(selectors.board.children) // get all cards DOM
+  const cards = Array.from(selectors.game.children) // get all cards DOM
 
   // watch cards clicking event
   cards.forEach((card) => {

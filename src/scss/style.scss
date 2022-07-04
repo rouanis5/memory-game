@@ -3,6 +3,10 @@
 @use './helpers/mixins' as *;
 @use './helpers/placeholders' as *;
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: var(--clr--primary); /* fallback for old browsers */
@@ -15,7 +19,7 @@ body {
   width: 100%;
   min-height: 100vh;
 }
-.game {
+.main {
   padding-top: 30px;
   padding-bottom: 30px;
   width: 500px;
@@ -23,18 +27,22 @@ body {
     margin-bottom: 15px;
   }
 }
+
 .board {
   width: 100%;
-  min-height: 500px;
-  @include flex(space-around, center) {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  min-height: 460px;
+  @include flex(center);
   background-color: var(--clr--bg);
   border-radius: $RADIUS;
   box-shadow: $SHADOW_ONE;
   padding: 15px;
+}
 
+.game {
+  @include flex(space-around, center) {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
   &.freeze {
     pointer-events: none;
   }
@@ -79,7 +87,7 @@ body {
   }
 }
 
-.play {
+.info {
   button {
     padding: 1em 3em;
     outline: none;
@@ -135,4 +143,8 @@ body {
     font-size: 14px;
     color: var(--clr-f-1);
   }
+}
+
+.d-none {
+  display: none;
 }

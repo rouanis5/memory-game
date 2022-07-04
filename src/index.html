@@ -7,7 +7,7 @@
     <title>memory game</title>
   </head>
   <body>
-    <div class="game">
+    <div class="main">
       <div class="controls">
         <div class="stats">
           <div class="scoreBoard">
@@ -30,12 +30,22 @@
       </div>
       <div class="board-container">
         <div class="board" id="board">
-          <div class="play">
+          <div class="info">
             <img src="./images/1.svg" alt="game" /> <br />
             <button type="button" id="start">Start</button>
           </div>
+          <div class="info d-none">
+            <img src="#" alt="game over" /> <br />
+            <button type="button" id="restart">restart</button>
+          </div>
+          <div class="info d-none">
+            <img src="#" alt="game winner" /> <br />
+            <button type="button" id="restart">restart</button>
+          </div>
+          <div class="game d-none" id="game">
+            <!-- game card will be generated here -->
+          </div>
         </div>
-        <div class="win">You won!</div>
       </div>
     </div>
     <script type="module" src="/main.js"></script>
