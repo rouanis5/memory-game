@@ -2,6 +2,7 @@ import boardView from './views/board'
 import { play } from './helpers/audio'
 import { setAdvancedInterval } from './helpers/functions'
 import { state, params, audio } from './config'
+import getIcons from './helpers/icons'
 
 let interval = null
 const { cardIdAttr: idAttr } = params // id attaribute
@@ -12,9 +13,6 @@ const selectors = {
   time: document.getElementById('time'),
   start: document.getElementById('start'),
 }
-
-// import the icons and create the board html
-const { html } = boardView(params.icons)
 
 // check if the game is finished
 function isGameOver() {
@@ -37,7 +35,6 @@ function isGameOver() {
 
   // if you lose the game
   if (state.wrong > params.maxTries) {
-    params.timer.stop()
     play(audio.over, { delay: params.delay })
     actions()
   }
@@ -78,7 +75,10 @@ function analyse(cards) {
 }
 
 function run() {
-  selectors.board.innerHTML = html // fill board with cards
+  // import the icons and create the board html
+  const icons = getIcons(params.icons) // dublicate icons and shuffle them
+  selectors.board.innerHTML = boardView(icons).html // fill board with cards
+
   play(audio.running, { loop: true }) // start infinite running sound
   params.timer.start() // start the timer
 

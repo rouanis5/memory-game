@@ -1,7 +1,6 @@
 import { setAudios } from './helpers/audio'
 import { realpath } from './helpers/functions'
 import Timer from './helpers/timer'
-import getIcons from './helpers/icons'
 
 const state = {
   moves: 0,
@@ -12,8 +11,7 @@ const state = {
 }
 
 const params = {
-  // dublicate icons and shuffle them
-  icons: getIcons(['🤑', '🔥', '🤖', '🐸', '🦜', '🦋', '⚽', '💎']),
+  icons: ['🤑', '🔥', '🤖', '🐸', '🦜', '🦋', '⚽', '💎'],
   delay: 600, // set default delay (= sass delay)
   maxTries: 8, // max tries
   timer: new Timer(),
