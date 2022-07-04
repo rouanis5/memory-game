@@ -15,9 +15,16 @@ body {
   width: 100%;
   min-height: 100vh;
 }
-
-.board {
+.game {
+  padding-top: 30px;
+  padding-bottom: 30px;
   width: 500px;
+  & > *:not(:last-child) {
+    margin-bottom: 15px;
+  }
+}
+.board {
+  width: 100%;
   min-height: 500px;
   @include flex(space-around, center) {
     flex-wrap: wrap;
@@ -69,5 +76,63 @@ body {
     .card-back {
       transform: rotateY(0) rotateZ(0);
     }
+  }
+}
+
+.play {
+  button {
+    padding: 1em 3em;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: $RADIUS * 3;
+    background-color: var(--clr-btn-blue);
+    color: var(--clr-f-2);
+    font-size: 1.25rem;
+    transition: opacity $DELAY;
+    margin-inline: auto;
+    margin-top: 15px;
+    display: block;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  img {
+    @include size(300px);
+  }
+}
+
+.stats {
+  width: 100%;
+  background-color: var(--clr--bg);
+  border-radius: $RADIUS;
+  box-shadow: $SHADOW_ONE;
+  padding: 15px;
+  @include flex(space-between, null);
+}
+
+.scoreBoard {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  user-select: none;
+  .num,
+  .title {
+    min-width: 50px;
+    margin-inline: auto;
+  }
+  .num {
+    @include min-size(100px, 40px);
+    @include flex(center);
+    border-radius: $LIGHT_RADIUS;
+    font-weight: $FW_BOLD;
+    font-size: 26px;
+  }
+  .title {
+    margin-top: 5px;
+    text-transform: capitalize;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: var(--clr-f-1);
   }
 }

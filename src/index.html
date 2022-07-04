@@ -9,14 +9,32 @@
   <body>
     <div class="game">
       <div class="controls">
-        <button type="button" id="start">Start</button>
         <div class="stats">
-          <div class="moves"><span id="moves">0</span> moves</div>
-          <div class="timer">time: <span id="time">0</span> sec</div>
+          <div class="scoreBoard">
+            <span class="num" id="moves">0</span>
+            <span class="title">moves</span>
+          </div>
+          <div class="scoreBoard">
+            <span class="num" id="matched">0</span>
+            <span class="title">matched</span>
+          </div>
+          <div class="scoreBoard">
+            <span class="num" id="remained">0</span>
+            <span class="title">remained tries</span>
+          </div>
+          <div class="scoreBoard">
+            <span class="num" id="time">0</span>
+            <span class="title">seconds</span>
+          </div>
         </div>
       </div>
       <div class="board-container">
-        <div class="board" id="board"></div>
+        <div class="board" id="board">
+          <div class="play">
+            <img src="./images/1.svg" alt="game" /> <br />
+            <button type="button" id="start">Start</button>
+          </div>
+        </div>
         <div class="win">You won!</div>
       </div>
     </div>
