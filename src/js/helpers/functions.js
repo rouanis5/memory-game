@@ -16,4 +16,14 @@ function realpath(stingURL) {
   return new URL(`../${url}`, import.meta.url).href
 }
 
-export { shuffle, realpath }
+// if you want to run the callback at the biginning
+function setAdvancedInterval(callBackFunction, interval, runOnStart = true) {
+  if (runOnStart) {
+    callBackFunction()
+  }
+  return setInterval(() => {
+    callBackFunction()
+  }, interval)
+}
+
+export { shuffle, realpath, setAdvancedInterval }
