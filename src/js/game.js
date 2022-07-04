@@ -12,6 +12,8 @@ const selectors = {
   board: document.getElementById('board'),
   time: document.getElementById('time'),
   start: document.getElementById('start'),
+  matched: document.getElementById('matched'),
+  remained: document.getElementById('remained'),
 }
 
 // check if the game is finished
@@ -34,7 +36,7 @@ function isGameOver() {
   }
 
   // if you lose the game
-  if (state.wrong > params.maxTries) {
+  if (state.wrong === params.maxTries) {
     play(audio.over, { delay: params.delay })
     actions()
   }
@@ -62,6 +64,7 @@ function analyse(cards) {
       flipped.map((el) => el.classList.add('matched')) // add match class (display cards & remove event listner)
       play(audio.reward, soundDelay) // play the reward sound
       state.matched += 1 // increase matched cards
+      selectors.matched.textContent = state.matched // display it
 
       isGameOver() // check if the game finished
       return
@@ -69,6 +72,7 @@ function analyse(cards) {
 
     // play sanction sound and inscrease wrong tries
     state.wrong += 1
+    selectors.remained.textContent = params.maxTries - state.wrong // display remaind tries
     play(audio.sanction, soundDelay)
     isGameOver() // check if the game finished
   }
@@ -78,6 +82,8 @@ function run() {
   // import the icons and create the board html
   const icons = getIcons(params.icons) // dublicate icons and shuffle them
   selectors.board.innerHTML = boardView(icons).html // fill board with cards
+
+  selectors.remained.textContent = params.maxTries - state.wrong // display remaind tries
 
   play(audio.running, { loop: true }) // start infinite running sound
   params.timer.start() // start the timer
