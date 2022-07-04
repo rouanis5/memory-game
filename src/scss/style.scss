@@ -19,12 +19,19 @@ body {
   width: 100%;
   min-height: 100vh;
 }
-.main {
+
+.dashboard {
   padding-top: 30px;
   padding-bottom: 30px;
+  @include flex() {
+    gap: $SPACING;
+  }
+}
+
+.main {
   width: 500px;
   & > *:not(:last-child) {
-    margin-bottom: 15px;
+    margin-bottom: $SPACING;
   }
 }
 
@@ -32,19 +39,12 @@ body {
   width: 100%;
   min-height: 460px;
   @include flex(center);
-  background-color: var(--clr--bg);
-  border-radius: $RADIUS;
-  box-shadow: $SHADOW_ONE;
-  padding: 15px;
 }
 
 .game {
   @include flex(space-around, center) {
     flex-wrap: wrap;
     gap: 10px;
-  }
-  &.freeze {
-    pointer-events: none;
   }
 }
 
@@ -87,35 +87,39 @@ body {
   }
 }
 
-.info {
+.sidebar {
+  // min-width: 70px;
+  @include flex(space-between, null, column);
   button {
-    padding: 1em 3em;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    border-radius: $RADIUS * 3;
-    background-color: var(--clr-btn-blue);
-    color: var(--clr-f-2);
-    font-size: 1.25rem;
-    transition: opacity $DELAY;
-    margin-inline: auto;
-    margin-top: 15px;
     display: block;
+    border: none;
+
+    cursor: pointer;
+    border-radius: $RADIUS_CIRCLE;
+    background-color: var(--clr-btn-yellow);
+    color: var(--clr-f-2);
+    font-size: 1.5rem;
+    @include size(50px);
+    transition: background-color $DELAY;
     &:hover {
-      opacity: 0.9;
+      background-color: var(--clr-btn-red);
+    }
+    &:not(:last-child) {
+      margin-bottom: $SPACING;
     }
   }
-  img {
-    @include size(300px);
-  }
+}
+
+.info {
+  height: 100%;
+}
+
+img {
+  @include size(300px);
 }
 
 .stats {
   width: 100%;
-  background-color: var(--clr--bg);
-  border-radius: $RADIUS;
-  box-shadow: $SHADOW_ONE;
-  padding: 15px;
   @include flex(space-between, null);
 }
 
@@ -147,4 +151,15 @@ body {
 
 .d-none {
   display: none;
+}
+
+.parent {
+  background-color: var(--clr--bg);
+  border-radius: $RADIUS;
+  box-shadow: $SHADOW_ONE;
+  padding: 15px;
+}
+
+.freeze {
+  pointer-events: none;
 }
