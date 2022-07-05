@@ -21,7 +21,8 @@ const audio = setAudios({
   reward: new URL('../audio/game_reward.mp3', import.meta.url).href,
   sanction: new URL('../audio/game_sanction.mp3', import.meta.url).href,
   over: new URL('../audio/game_over.mp3', import.meta.url).href,
-  running: new URL('../audio/game_running.wav', import.meta.url).href,
+  running: new URL('../audio/game_running.mp3', import.meta.url).href,
+  win: new URL('../audio/game_win.mp3', import.meta.url).href,
 })
 
 export { state, params, audio }

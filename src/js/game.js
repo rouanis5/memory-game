@@ -41,6 +41,7 @@ function isGameOver() {
   // if you win the game
   if (state.matched === params.icons.length) {
     stopGame()
+    play(audio.win) //
     state.win = true
     state.time = params.timer.getMilliseconds() // save the game time in state.time
     return
