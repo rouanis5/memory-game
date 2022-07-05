@@ -2,6 +2,7 @@
 @use './config/colors' as *;
 @use './helpers/mixins' as *;
 @use './helpers/placeholders' as *;
+@use 'sass:math';
 
 * {
   box-sizing: border-box;
@@ -93,6 +94,7 @@ body {
   button {
     display: block;
     border: none;
+    overflow: hidden;
 
     cursor: pointer;
     border-radius: $RADIUS_CIRCLE;
@@ -100,12 +102,31 @@ body {
     color: var(--clr-f-2);
     font-size: 1.5rem;
     @include size(50px);
-    transition: background-color $DELAY;
+    border: 0 solid var(--clr-btn-red);
+    transition: background-color $DELAY, border $DELAY;
+
     &:hover {
       background-color: var(--clr-btn-red);
     }
     &:not(:last-child) {
       margin-bottom: $SPACING;
+    }
+    @include before {
+      top: 0;
+      left: 0;
+      transform-origin: top left;
+      transform: rotate(45deg);
+      background: var(--clr-btn-red);
+      height: 4px;
+      width: 0;
+      box-shadow: $SHADOW_ONE;
+      transition: width $DELAY;
+    }
+    &.disabled {
+      border-width: 5px;
+      &::before {
+        width: 100% * math.sqrt(2);
+      }
     }
   }
 }
@@ -166,6 +187,4 @@ body {
 
 .freeze {
   pointer-events: none;
-  // opacity: ;
-  filter: grayscale(0.7);
 }
