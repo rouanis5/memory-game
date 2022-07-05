@@ -9,7 +9,7 @@ function setAudios(audioObject) {
 }
 
 // play the sound correctly with parameters of delay and loop
-function play(sound, { delay = 0, loop = false }) {
+function play(sound, { delay = 0, loop = false } = {}) {
   const audio = sound
   function runSound() {
     // take sure to start the sound from the begining
