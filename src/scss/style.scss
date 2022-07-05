@@ -111,11 +111,15 @@ body {
 }
 
 .info {
-  height: 100%;
-}
-
-img {
-  @include size(300px);
+  .title {
+    text-align: center;
+    color: var(--clr-btn-yellow);
+    text-transform: uppercase;
+    font-size: 2em;
+  }
+  img {
+    @include size(300px);
+  }
 }
 
 .stats {
@@ -162,4 +166,6 @@ img {
 
 .freeze {
   pointer-events: none;
+  // opacity: ;
+  filter: grayscale(0.7);
 }

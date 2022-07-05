@@ -33,6 +33,7 @@ function stopGame() {
   clearInterval(interval) // stop updating time on the screen
   audio.running.pause() // stop running audio
   selectors.game.classList.add('freeze') // stop all events on the game board
+  selectors.sidebar.stop.classList.add('freeze') // freeze btn
 }
 
 // check if the game is finished
