@@ -9,13 +9,6 @@ function shuffle(array) {
   return tmp
 }
 
-// return the realpath (full url)
-function realpath(stingURL) {
-  const url = stingURL
-  // the current folder is gonna be the js folder
-  return new URL(`../${url}`, import.meta.url).href
-}
-
 // if you want to run the callback at the biginning
 function setAdvancedInterval(callBackFunction, interval, runOnStart = true) {
   if (runOnStart) {
@@ -26,4 +19,4 @@ function setAdvancedInterval(callBackFunction, interval, runOnStart = true) {
   }, interval)
 }
 
-export { shuffle, realpath, setAdvancedInterval }
+export { shuffle, setAdvancedInterval }

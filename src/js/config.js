@@ -1,5 +1,4 @@
 import { setAudios } from './helpers/audio'
-import { realpath } from './helpers/functions'
 import Timer from './helpers/timer'
 
 const state = {
@@ -19,10 +18,10 @@ const params = {
 }
 
 const audio = setAudios({
-  reward: realpath('../audio/game_reward.mp3'),
-  sanction: realpath('../audio/game_sanction.mp3'),
-  over: realpath('../audio/game_over.mp3'),
-  running: realpath('../audio/game_running.wav'),
+  reward: new URL('../audio/game_reward.mp3', import.meta.url).href,
+  sanction: new URL('../audio/game_sanction.mp3', import.meta.url).href,
+  over: new URL('../audio/game_over.mp3', import.meta.url).href,
+  running: new URL('../audio/game_running.wav', import.meta.url).href,
 })
 
 export { state, params, audio }
