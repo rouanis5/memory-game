@@ -1,10 +1,12 @@
 import boardView from './views/board'
-import { play } from './helpers/audio'
+import { play, stopAudios, stop as pause } from './helpers/audio'
 import { setAdvancedInterval } from './helpers/functions'
-import { state as stateOriginal, params, audio } from './config'
+import { state as stateNative, params, audio as audioNative } from './config'
 import getIcons from './helpers/icons'
 
-let state = { ...stateOriginal }
+let state = { ...stateNative } // create a copy of state
+let audio = params.music ? { ...audioNative } : {} // copy audio if music is allowed
+
 let interval = null
 const { cardIdAttr: idAttr } = params // id attaribute
 
@@ -17,6 +19,7 @@ const selectors = {
     start: document.getElementById('start'),
     stop: document.getElementById('stop'),
     restart: document.getElementById('restart'),
+    music: document.getElementById('music'),
   },
 
   scores: {
@@ -27,13 +30,17 @@ const selectors = {
   },
 }
 
+// if music not  allowed add disabled class
+selectors.sidebar.music.classList.toggle('disabled', params.music === false)
+
 function stopGame() {
   // set of actions to run
+  state.running = false
   params.timer.stop() // stop the timer
   clearInterval(interval) // stop updating time on the screen
-  audio.running.pause() // stop running audio
+  pause(audio.running) // stop running audio
   selectors.game.classList.add('freeze') // stop all events on the game board
-  selectors.sidebar.stop.classList.add('freeze') // freeze btn
+  selectors.sidebar.stop.classList.add('freeze', 'disabled') // freeze btn
 }
 
 // check if the game is finished
@@ -92,6 +99,7 @@ function analyse(cards) {
 }
 
 function run() {
+  state.running = true
   // import the icons and create the board html
   const icons = getIcons(params.icons) // dublicate icons and shuffle them
   Array.from(selectors.board.children).map((el) => el.classList.add('d-none'))
@@ -99,11 +107,11 @@ function run() {
   selectors.game.innerHTML = boardView(icons).html // fill board with cards
 
   // freeze start btn
-  selectors.sidebar.start.classList.add('freeze')
+  selectors.sidebar.start.classList.add('freeze', 'disabled')
   // remove freezing events
   selectors.game.classList.remove('freeze')
-  selectors.sidebar.stop.classList.remove('freeze')
-  selectors.sidebar.restart.classList.remove('freeze')
+  selectors.sidebar.stop.classList.remove('freeze', 'disabled')
+  selectors.sidebar.restart.classList.remove('freeze', 'disabled')
 
   selectors.scores.remained.textContent = params.maxTries - state.wrong // display remaind tries
 
@@ -128,9 +136,9 @@ function run() {
 }
 
 function resetScreen() {
-  selectors.sidebar.start.classList.remove('freeze') // unfreeze start btn
-  selectors.sidebar.stop.classList.add('freeze') // freeze stop btn
-  selectors.sidebar.restart.classList.add('freeze') // freeze retart btn
+  selectors.sidebar.start.classList.remove('freeze', 'disabled') // unfreeze start btn
+  selectors.sidebar.stop.classList.add('freeze', 'disabled') // freeze stop btn
+  selectors.sidebar.restart.classList.add('freeze', 'disabled') // freeze retart btn
 
   // hide all board childrens
   Array.from(selectors.board.children).map((el) => el.classList.add('d-none'))
@@ -141,7 +149,7 @@ function resetScreen() {
     el[1].textContent = '0'
   })
 
-  state = { ...stateOriginal } // reset sate
+  state = { ...stateNative } // reset sate
   selectors.game.innerHTML = '' // reset game
 }
 
@@ -157,6 +165,23 @@ function restart() {
   run()
 }
 
+// run or stop music ()
+function toggleMusic() {
+  // delete audio
+  if (params.music === true) {
+    selectors.sidebar.music.classList.add('disabled')
+    audio = stopAudios(audio)
+    params.music = false
+    return
+  }
+
+  selectors.sidebar.music.classList.remove('disabled')
+  audio = { ...audioNative }
+  params.music = true
+  if (state.running) play(audio.running)
+}
+
 selectors.sidebar.start.addEventListener('click', run)
 selectors.sidebar.stop.addEventListener('click', stop)
 selectors.sidebar.restart.addEventListener('click', restart)
+selectors.sidebar.music.addEventListener('click', toggleMusic)

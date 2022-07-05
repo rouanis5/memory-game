@@ -6,6 +6,7 @@ const state = {
   matched: 0,
   wrong: 0,
   time: undefined,
+  running: false,
   win: false,
 }
 
@@ -15,6 +16,7 @@ const params = {
   maxTries: 8, // max tries
   timer: new Timer(),
   cardIdAttr: 'data-card-id',
+  music: true,
 }
 
 const audio = setAudios({
