@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>memory game</title>
+    <!-- bootstrap icons CDN link -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css"
+    />
+    <script type="module" crossorigin src="./assets/index.ea97347a.js"></script>
+    <link rel="stylesheet" href="./assets/index.a31453db.css">
+    <script type="module">try{import("_").catch(()=>1);}catch(e){}window.__vite_is_dynamic_import_support=true;</script>
+    <script type="module">!function(){if(window.__vite_is_dynamic_import_support)return;console.warn("vite: loading legacy build because dynamic import is unsupported, syntax error above should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+  </head>
+  <body>
+    <div class="dashboard">
+      <div class="main">
+        <div class="controls parent">
+          <div class="stats">
+            <div class="scoreBoard">
+              <span class="num" id="moves">0</span>
+              <span class="title">moves</span>
+            </div>
+            <div class="scoreBoard">
+              <span class="num" id="matched">0</span>
+              <span class="title">matched</span>
+            </div>
+            <div class="scoreBoard">
+              <span class="num" id="remained">0</span>
+              <span class="title">remained tries</span>
+            </div>
+            <div class="scoreBoard">
+              <span class="num" id="time">0</span>
+              <span class="title">seconds</span>
+            </div>
+          </div>
+        </div>
+        <div class="board parent" id="board">
+          <div class="info" id="welcom">
+            <h3 class="title">memory game</h3>
+            <img src="./assets/1.2ec21324.svg" alt="game" /> <br />
+          </div>
+          <div class="game d-none" id="game">
+            <!-- game card will be generated here -->
+          </div>
+        </div>
+      </div>
+      <div class="sidebar parent">
+        <div id="controllers">
+          <button type="button" id="start" alt="start">
+            <i class="bi bi-play-fill"></i>
+          </button>
+          <button type="button" id="stop" class="freeze disabled">
+            <i class="bi bi-pause-fill"></i>
+          </button>
+          <button type="button" id="restart" class="freeze disabled">
+            <i class="bi bi-arrow-repeat"></i>
+          </button>
+        </div>
+        <div>
+          <button type="button" id="music">
+            <i class="bi bi-music-note-beamed"></i>
+          </button>
+          <button type="button" id="info">
+            <i class="bi bi-info"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+    <script nomodule id="vite-legacy-polyfill" src="./assets/polyfills-legacy.5aacfcb8.js"></script>
+    <script nomodule id="vite-legacy-entry" data-src="./assets/index-legacy.52a08596.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+  </body>
+</html>
