@@ -178,7 +178,7 @@ function toggleMusic() {
   selectors.sidebar.music.classList.remove('disabled')
   audio = { ...audioNative }
   params.music = true
-  if (state.running) play(audio.running)
+  if (state.running) play(audio.running, { loop: true })
 }
 
 selectors.sidebar.start.addEventListener('click', run)
