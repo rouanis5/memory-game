@@ -14,12 +14,13 @@ export default function rankingTemplate(rowsHtml) {
   <table>
     <thead>
       <th>id</th>
+      <th>win</th>
       <th>moves</th>
       <th>wrong</th>
       <th>time</th>
       <th>date</th>
     </thead>
-    <div>${rowsHtml}</div>
+    <tbody>${rowsHtml}</tbody>
   </table>
   `)
 

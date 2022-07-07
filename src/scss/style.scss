@@ -196,22 +196,50 @@ body {
     overflow-x: scroll;
   }
 
-  tr:nth-of-type(odd) {
-    background: #eee;
+  tr {
+    &:nth-of-type(even) {
+      border-top: 1px solid var(--clr--black);
+    }
+  }
+
+  th,
+  td {
+    text-align: center;
+    padding-inline: 10px;
+    font-size: 14px;
   }
 
   th {
-    background-color: #3498db;
     background-color: var(--clr-btn-yellow);
-    color: white;
-    font-weight: bold;
     text-transform: capitalize;
+    padding-block: 20px;
+    &:first-child {
+      border-top-left-radius: $RADIUS;
+      border-bottom-left-radius: $RADIUS;
+    }
+    &:last-child {
+      border-top-right-radius: $RADIUS;
+      border-bottom-right-radius: $RADIUS;
+    }
   }
 
-  td,
-  th {
-    padding: 20px 10px;
-    text-align: left;
-    font-size: 18px;
+  td {
+    padding-block: 12px;
+    color: var(--clr-f-1);
+
+    &.winner,
+    &.loser {
+      @include before() {
+        @include center;
+        @include size(18px);
+        border-radius: $RADIUS_CIRCLE;
+      }
+    }
+    &.winner::before {
+      background-color: var(--clr-btn-green);
+    }
+    &.loser::before {
+      background-color: var(--clr-btn-red);
+    }
   }
 }
