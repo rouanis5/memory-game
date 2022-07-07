@@ -6,6 +6,7 @@ const state = {
   matched: 0,
   wrong: 0,
   time: undefined,
+  date: undefined,
   running: false,
   win: false,
 }
