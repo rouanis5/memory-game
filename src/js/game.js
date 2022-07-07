@@ -4,6 +4,7 @@ import { setAdvancedInterval } from './helpers/functions'
 import { state as stateNative, params, audio as audioNative } from './config'
 import getIcons from './helpers/icons'
 import ranking from './views/ranking'
+import DataBuilder from './helpers/builders/LocalStorageBuilder'
 
 let state = { ...stateNative } // create a copy of state
 let audio = params.music ? { ...audioNative } : {} // copy audio if music is allowed
@@ -11,7 +12,9 @@ let audio = params.music ? { ...audioNative } : {} // copy audio if music is all
 // local storage variables
 const localStateKey = params.localStorageKey
 const localState = localStorage.getItem(localStateKey)
-let data = localState ? JSON.parse(localState) : []
+let data = localState
+  ? JSON.parse(localState)
+  : new DataBuilder().setMusic(params.music).build()
 
 let interval = null
 const { cardIdAttr: idAttr } = params // id attaribute
@@ -38,8 +41,29 @@ const selectors = {
   },
 }
 
-// if music not  allowed add disabled class
-selectors.sidebar.music.classList.toggle('disabled', params.music === false)
+// run or stop music ()
+function SetGameMusic(paramsMusic) {
+  data = new DataBuilder().setMusic(paramsMusic).build()
+  localStorage.setItem(localStateKey, JSON.stringify(data))
+
+  if (paramsMusic === true) {
+    selectors.sidebar.music.classList.remove('disabled')
+    audio = { ...audioNative }
+    params.music = true
+    if (state.running) play(audio.running, { loop: true })
+    return
+  }
+
+  selectors.sidebar.music.classList.add('disabled')
+  audio = stopAudios(audio) // delete audio
+  params.music = false
+}
+
+// if localSate exist set the data.music as default params
+if (localState) {
+  params.music = data.music
+}
+SetGameMusic(params.music)
 
 // hide all board children and chose which one to display
 function resetBoardChildren(childToDisplay = null) {
@@ -63,7 +87,14 @@ function saveGame(isWin = false) {
   state.win = isWin
   state.time = params.timer.getMilliseconds() // save the game time in state.time
   state.running = undefined
-  data = [{ ...state }, ...data]
+  const gamePlay = {
+    maxTries: params.maxTries,
+    ...state,
+  }
+  data = new DataBuilder()
+    .setMusic(params.music)
+    .setStats([gamePlay, ...data.stats])
+    .build()
   localStorage.setItem(localStateKey, JSON.stringify(data))
   state = { ...stateNative } // reset state
   state.running = false
@@ -192,24 +223,12 @@ function restart() {
   run()
 }
 
-// run or stop music ()
+// toggle music ()
 function toggleMusic() {
-  // delete audio
-  if (params.music === true) {
-    selectors.sidebar.music.classList.add('disabled')
-    audio = stopAudios(audio)
-    params.music = false
-    return
-  }
-
-  selectors.sidebar.music.classList.remove('disabled')
-  audio = { ...audioNative }
-  params.music = true
-  if (state.running) play(audio.running, { loop: true })
+  SetGameMusic(!params.music)
 }
-
 function displayRanking() {
-  selectors.ranking.innerHTML = ranking(data)
+  selectors.ranking.innerHTML = ranking(data.stats)
   resetBoardChildren(selectors.ranking) // display ranking table
 }
 
