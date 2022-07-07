@@ -16,6 +16,7 @@ body {
     var(--clr--primary),
     var(--clr--secondary)
   );
+  // background: #eee;
   @include flex(center);
   width: 100%;
   min-height: 100vh;
@@ -39,7 +40,6 @@ body {
 .board {
   width: 100%;
   min-height: 460px;
-  @include flex(center);
 }
 
 .game {
@@ -187,4 +187,31 @@ body {
 
 .freeze {
   pointer-events: none;
+}
+
+.ranking {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: scroll;
+  }
+
+  tr:nth-of-type(odd) {
+    background: #eee;
+  }
+
+  th {
+    background-color: #3498db;
+    background-color: var(--clr-btn-yellow);
+    color: white;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  td,
+  th {
+    padding: 20px 10px;
+    text-align: left;
+    font-size: 18px;
+  }
 }
