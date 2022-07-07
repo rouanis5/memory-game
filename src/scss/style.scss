@@ -199,6 +199,7 @@ body {
   tr {
     &:nth-of-type(even) {
       border-top: 1px solid var(--clr--black);
+      border-bottom: 1px solid var(--clr--black);
     }
   }
 
