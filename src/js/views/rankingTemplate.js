@@ -16,7 +16,7 @@ export default function rankingTemplate(rowsHtml) {
       <th>id</th>
       <th>win</th>
       <th>moves</th>
-      <th>wrong</th>
+      <th>accuracy</th>
       <th>time</th>
       <th>date</th>
     </thead>
