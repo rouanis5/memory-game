@@ -18,6 +18,7 @@ const params = {
   timer: new Timer(),
   cardIdAttr: 'data-card-id',
   music: true,
+  localStorageKey: 'memory-game-state-date-2022-07-06',
 }
 
 const audio = setAudios({

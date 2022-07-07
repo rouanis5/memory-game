@@ -3,9 +3,15 @@ import { play, stopAudios, stop as pause } from './helpers/audio'
 import { setAdvancedInterval } from './helpers/functions'
 import { state as stateNative, params, audio as audioNative } from './config'
 import getIcons from './helpers/icons'
+import ranking from './views/ranking'
 
 let state = { ...stateNative } // create a copy of state
 let audio = params.music ? { ...audioNative } : {} // copy audio if music is allowed
+
+// local storage variables
+const localStateKey = params.localStorageKey
+const localState = localStorage.getItem(localStateKey)
+let data = localState ? JSON.parse(localState) : []
 
 let interval = null
 const { cardIdAttr: idAttr } = params // id attaribute
@@ -14,12 +20,14 @@ const selectors = {
   board: document.getElementById('board'),
   welcom: document.getElementById('welcom'),
   game: document.getElementById('game'),
+  ranking: document.getElementById('rankingView'),
 
   sidebar: {
     start: document.getElementById('start'),
     stop: document.getElementById('stop'),
     restart: document.getElementById('restart'),
     music: document.getElementById('music'),
+    ranking: document.getElementById('rankingBtn'),
   },
 
   scores: {
@@ -33,6 +41,13 @@ const selectors = {
 // if music not  allowed add disabled class
 selectors.sidebar.music.classList.toggle('disabled', params.music === false)
 
+// hide all board children and chose which one to display
+function resetBoardChildren(childToDisplay = null) {
+  const child = childToDisplay
+  Array.from(selectors.board.children).map((el) => el.classList.add('d-none'))
+  if (child) child.classList.remove('d-none')
+}
+
 function stopGame() {
   // set of actions to run
   state.running = false
@@ -43,22 +58,32 @@ function stopGame() {
   selectors.sidebar.stop.classList.add('freeze', 'disabled') // freeze btn
 }
 
+// save data to localstorage
+function saveGame(isWin = false) {
+  state.win = isWin
+  state.time = params.timer.getMilliseconds() // save the game time in state.time
+  state.running = undefined
+  data = [{ ...state }, ...data]
+  localStorage.setItem(localStateKey, JSON.stringify(data))
+  state = { ...stateNative } // reset state
+  state.running = false
+}
+
 // check if the game is finished
 function isGameOver() {
   // if you win the game
   if (state.matched === params.icons.length) {
     stopGame()
+    saveGame(true)
     play(audio.win) //
-    state.win = true
-    state.time = params.timer.getMilliseconds() // save the game time in state.time
     return
   }
 
   // if you lose the game
   if (state.wrong === params.maxTries) {
     stopGame()
+    saveGame()
     play(audio.over, { delay: params.delay })
-    state.time = params.timer.getMilliseconds() // save the game time in state.time
   }
 }
 
@@ -99,15 +124,18 @@ function analyse(cards) {
 }
 
 function run() {
+  // save new state
   state.running = true
+  state.date = new Date().getTime() // save the current day
+
   // import the icons and create the board html
   const icons = getIcons(params.icons) // dublicate icons and shuffle them
-  Array.from(selectors.board.children).map((el) => el.classList.add('d-none'))
-  selectors.game.classList.remove('d-none')
+  resetBoardChildren(selectors.game) // hide all board children and display game
   selectors.game.innerHTML = boardView(icons).html // fill board with cards
 
   // freeze start btn
   selectors.sidebar.start.classList.add('freeze', 'disabled')
+  selectors.sidebar.ranking.classList.add('freeze', 'disabled')
   // remove freezing events
   selectors.game.classList.remove('freeze')
   selectors.sidebar.stop.classList.remove('freeze', 'disabled')
@@ -135,13 +163,14 @@ function run() {
   }, 1000)
 }
 
-function resetScreen() {
+function resetScreen(childToDisplay = null) {
   selectors.sidebar.start.classList.remove('freeze', 'disabled') // unfreeze start btn
+  selectors.sidebar.ranking.classList.remove('freeze', 'disabled') // unfreeze
   selectors.sidebar.stop.classList.add('freeze', 'disabled') // freeze stop btn
   selectors.sidebar.restart.classList.add('freeze', 'disabled') // freeze retart btn
 
   // hide all board childrens
-  Array.from(selectors.board.children).map((el) => el.classList.add('d-none'))
+  resetBoardChildren(childToDisplay)
 
   // reset all numbers
   Object.entries(selectors.scores).forEach((el) => {
@@ -149,14 +178,12 @@ function resetScreen() {
     el[1].textContent = '0'
   })
 
-  state = { ...stateNative } // reset sate
   selectors.game.innerHTML = '' // reset game
 }
 
 function stop() {
   stopGame()
-  resetScreen()
-  selectors.welcom.classList.remove('d-none') // display welecom section
+  resetScreen(selectors.welcom) // display welecom section
 }
 
 function restart() {
@@ -181,7 +208,13 @@ function toggleMusic() {
   if (state.running) play(audio.running, { loop: true })
 }
 
+function displayRanking() {
+  selectors.ranking.innerHTML = ranking(data)
+  resetBoardChildren(selectors.ranking) // display ranking table
+}
+
 selectors.sidebar.start.addEventListener('click', run)
 selectors.sidebar.stop.addEventListener('click', stop)
 selectors.sidebar.restart.addEventListener('click', restart)
 selectors.sidebar.music.addEventListener('click', toggleMusic)
+selectors.sidebar.ranking.addEventListener('click', displayRanking)
