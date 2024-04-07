@@ -140,6 +140,8 @@ body {
   }
   img {
     @include size(300px);
+    display: block;
+    margin-inline: auto;
   }
 }
 
